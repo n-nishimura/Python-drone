@@ -3,6 +3,8 @@ import socket
 import sys
 import time
 
+from numpy import binary_repr
+
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 logger = logging.getLogger(__name__)
@@ -16,6 +18,8 @@ class DroneManager(object):
       self.drone_port = drone_port
       self.drone_address = (drone_ip, drone_port)
       self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      self.socket.bind((self.host_ip,self.host_port))
+      self.socket.sendto(b'command')
 
 
 
