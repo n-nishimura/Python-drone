@@ -19,7 +19,26 @@ class DroneManager(object):
       self.drone_address = (drone_ip, drone_port)
       self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       self.socket.bind((self.host_ip,self.host_port))
-      self.socket.sendto(b'command')
+      self.socket.sendto(b'command', self.drone_address)
+      self.socket.sendto(b'streamon', self.drone_address)
+
+  def __dell__(self):
+      self.stop()
+  def stop(self):
+      self.socket.close()
+  def send_command(self, command):
+      logger.info({'action': 'send_command', 'command':command})
+      self.socket.sendto(command.encode('UTF-8'), self.drone_address)
+
+  def takeoff(self):
+    self.send_command('takeoff')
+  def land(self):
+    self.send_command('land')
+
+
+
+
+
 
 
 
