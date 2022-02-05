@@ -1,9 +1,10 @@
+from base64 import encode
 import logging
 import socket
 import sys
 import time
 
-from numpy import binary_repr
+# from numpy import binary_repr
 
 
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
@@ -27,15 +28,21 @@ class DroneManager(object):
   def stop(self):
       self.socket.close()
   def send_command(self, command):
-      logger.info({'action': 'send_command', 'command':command})
-      self.socket.sendto(command.encode('UTF-8'), self.drone_address)
+      logger.info({'action': 'send_command', 'command': command})
+      self.socket.sendto(command.encode('utf-8'), self.drone_address)
+
 
   def takeoff(self):
     self.send_command('takeoff')
   def land(self):
     self.send_command('land')
 
+if __name__ == '__main__':
+  drone_manager = DroneManager()
+  drone_manager.takeoff()
 
+  time.sleep(10)
+  drone_manager.land()
 
 
 
