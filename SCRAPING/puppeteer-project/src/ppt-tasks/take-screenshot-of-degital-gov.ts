@@ -15,6 +15,7 @@ export const takeScreenshotOfDegitalGov = async () => {
       height: windowSize.height,
     },
     args: [`--window-size=${windowSize.width},${windowSize.height}`],
+    //表示するウィンドウサイズの変更
   });
   const page = await browser.newPage();
   await page.goto('https://www.digital.go.jp/');
